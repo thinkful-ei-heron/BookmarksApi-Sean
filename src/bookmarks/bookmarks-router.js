@@ -23,6 +23,7 @@ bookmarksRouter
       req.app.get('db')
     )
       .then(bookmarks => {
+        console.log(bookmarks)
         res.json(bookmarks.map(cleanUp));
       })
       .catch(next);
@@ -53,11 +54,11 @@ bookmarksRouter
   }); 
 
 bookmarksRouter
-  .route('/:bookmark_id')
+  .route(`/:bookmark_id`)
   .all((req, res, next) => {
     BookmarksService.getBookmarkById(
       req.app.get('db'),
-        req.params.bookmark_id
+      req.params.bookmark_id
     )
       .then(bookmark => {
         if(!bookmark) {
@@ -70,7 +71,7 @@ bookmarksRouter
       })
       .catch(next);
   })
-  .get((req, res, next) => {
+  .get((req, res) => {
     res.json(cleanUp(res.bookmark));
   })
   .delete((req, res, next) => {
@@ -102,9 +103,9 @@ bookmarksRouter
       bookmarkToUpdate
     )
       .then(numRowAffected => {
-        res.status(204).end();
+       res.status(204).end();
       })
       .catch(next);
-  });
+  })
 
 module.exports = bookmarksRouter;

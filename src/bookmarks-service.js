@@ -21,7 +21,7 @@ const BookmarksService = {
       .where({id})
       .delete();
   },
-  updateBookmark(knex, id, newBookmarkFields){
+  async updateBookmark(knex, id, newBookmarkFields){
     return knex('bookmarks')
       .where({id})
       .update(newBookmarkFields);
